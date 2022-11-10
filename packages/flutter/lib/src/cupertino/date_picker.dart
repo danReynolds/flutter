@@ -923,7 +923,11 @@ class _CupertinoDatePickerDateTimeState extends State<CupertinoDatePicker> {
   // One or more pickers have just stopped scrolling.
   void _pickerDidStopScrolling() {
     // Call setState to update the greyed out date/hour/minute/meridiem.
-    setState(() { });
+    if (isMounted) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        setState(() { });
+      });
+    }
 
     if (isScrolling) {
       return;
